@@ -72,6 +72,12 @@
     text-align: center;
     border: 1px solid rgba(255, 255, 255, 0.3);
     animation: fadeInDown 0.6s ease;
+    direction: ltr;
+  }
+  
+  .header.rtl {
+    direction: ltr;
+    text-align: center;
   }
 
   @keyframes fadeInDown {
@@ -428,14 +434,14 @@
 </head>
 <body>
   <div class="container">
-    <div class="header">
+    <div class="header" id="main-header">
       <div class="logo-container">
         <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
           <path d="M12 2L2 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-10-5zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V7.89l7-3.11v8.2z"/>
         </svg>
       </div>
-      <h1>Oracle E-Business Suite</h1>
-      <p class="subtitle">Training Portal & Quick Start Guide</p>
+      <h1 id="main-title">Oracle E-Business Suite</h1>
+      <p class="subtitle" id="main-subtitle">Training Portal & Quick Start Guide</p>
       <div class="lang-toggle">
         <button class="lang-btn active" onclick="showLanguage('en')">English</button>
         <button class="lang-btn" onclick="showLanguage('ar')">العربية</button>
@@ -546,6 +552,23 @@
       
       // Activate clicked button
       event.target.classList.add('active');
+      
+      // Update header based on language
+      const header = document.getElementById('main-header');
+      const title = document.getElementById('main-title');
+      const subtitle = document.getElementById('main-subtitle');
+      
+      if (lang === 'ar') {
+        header.classList.add('rtl');
+        title.textContent = 'نظام أوراكل للأعمال';
+        subtitle.textContent = 'بوابة التدريب ودليل البدء السريع';
+        document.title = 'بوابة تدريب نظام أوراكل للأعمال';
+      } else {
+        header.classList.remove('rtl');
+        title.textContent = 'Oracle E-Business Suite';
+        subtitle.textContent = 'Training Portal & Quick Start Guide';
+        document.title = 'Oracle E-Business Suite Training Portal';
+      }
       
       // Smooth scroll to content
       document.querySelector('.content-section.active').scrollIntoView({ 
