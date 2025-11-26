@@ -3,64 +3,329 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Training Page – Oracle E‑Business Suite</title>
+<title>Oracle E-Business Suite Training Portal</title>
 <style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+  
   :root {
-    --primary-color: #005a8c;
-    --secondary-color: #ffffff;
-    --accent-color: #00aaff;
-    --bg-gradient: linear-gradient(145deg, #eef5fc, #d0e4f7);
+    --primary: #0066cc;
+    --primary-dark: #004999;
+    --primary-light: #4d94ff;
+    --accent: #00d4ff;
+    --success: #10b981;
+    --warning: #f59e0b;
+    --bg-primary: #ffffff;
+    --bg-secondary: #f8fafc;
+    --bg-tertiary: #f1f5f9;
+    --text-primary: #0f172a;
+    --text-secondary: #475569;
+    --text-muted: #94a3b8;
+    --border: #e2e8f0;
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+    --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
   }
 
   body {
-    margin: 0;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: var(--bg-gradient);
-    color: #333;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: var(--text-primary);
     line-height: 1.6;
+    min-height: 100vh;
+    padding: 2rem 1rem;
+    position: relative;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg width="60" height="60" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="grid" width="60" height="60" patternUnits="userSpaceOnUse"><path d="M 60 0 L 0 0 0 60" fill="none" stroke="white" stroke-width="0.5" opacity="0.1"/></pattern></defs><rect width="100%" height="100%" fill="url(%23grid)"/></svg>');
+    pointer-events: none;
+    z-index: 0;
   }
 
   .container {
-    max-width: 900px;
-    margin: 2rem auto;
-    padding: 1rem 2rem;
-    background: var(--secondary-color);
-    border-radius: 12px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  .header {
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(20px);
+    border-radius: 20px;
+    padding: 3rem 2.5rem;
+    margin-bottom: 2rem;
+    box-shadow: var(--shadow-xl);
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    animation: fadeInDown 0.6s ease;
+  }
+
+  @keyframes fadeInDown {
+    from {
+      opacity: 0;
+      transform: translateY(-30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .logo-container {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, var(--primary), var(--primary-light));
+    border-radius: 20px;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 8px 16px rgba(0, 102, 204, 0.3);
+  }
+
+  .logo-container svg {
+    width: 40px;
+    height: 40px;
+    fill: white;
   }
 
   h1 {
-    text-align: center;
-    color: var(--primary-color);
-    margin-bottom: 1.5rem;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.02em;
   }
 
-  h2 {
-    color: var(--primary-color);
-    border-bottom: 2px solid var(--accent-color);
-    padding-bottom: 0.5rem;
+  .subtitle {
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+    font-weight: 400;
+  }
+
+  .lang-toggle {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
     margin-top: 2rem;
   }
 
-  h3 {
-    color: var(--primary-color);
-    margin-top: 1.5rem;
+  .lang-btn {
+    padding: 0.75rem 2rem;
+    border: 2px solid var(--border);
+    background: white;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: var(--text-secondary);
+  }
+
+  .lang-btn.active {
+    background: var(--primary);
+    color: white;
+    border-color: var(--primary);
+    box-shadow: 0 4px 12px rgba(0, 102, 204, 0.3);
+  }
+
+  .lang-btn:hover:not(.active) {
+    border-color: var(--primary);
+    color: var(--primary);
+    transform: translateY(-2px);
+  }
+
+  .content-section {
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(20px);
+    border-radius: 20px;
+    padding: 2.5rem;
+    margin-bottom: 2rem;
+    box-shadow: var(--shadow-xl);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    animation: fadeInUp 0.6s ease;
+    display: none;
+  }
+
+  .content-section.active {
+    display: block;
+  }
+
+  .video-container {
+    position: relative;
+    border-radius: 16px;
+    overflow: hidden;
+    margin: 2rem 0;
+    box-shadow: var(--shadow-lg);
+    background: #000;
+  }
+
+  .video-container::before {
+    content: '';
+    display: block;
+    padding-top: 56.25%; /* 16:9 Aspect Ratio */
   }
 
   video {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
-    max-height: 420px;
+    height: 100%;
+    border: none;
+  }
+
+  h2 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  h2::before {
+    content: '';
+    width: 4px;
+    height: 28px;
+    background: linear-gradient(180deg, var(--primary), var(--accent));
+    border-radius: 4px;
+  }
+
+  h3 {
+    font-size: 1.35rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 2rem 0 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .step-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    background: var(--primary);
+    color: white;
     border-radius: 8px;
-    box-shadow: 0 3px 6px rgba(0,0,0,0.15);
+    font-size: 0.85rem;
+    font-weight: 700;
+  }
+
+  .steps-list {
+    list-style: none;
+    counter-reset: step-counter;
+    margin: 1.5rem 0;
+  }
+
+  .steps-list li {
+    counter-increment: step-counter;
+    position: relative;
+    padding: 1.25rem 1.5rem 1.25rem 4.5rem;
     margin-bottom: 1rem;
+    background: var(--bg-secondary);
+    border-radius: 12px;
+    border-left: 4px solid var(--primary);
+    transition: all 0.3s ease;
   }
 
-  ol {
-    margin-left: 1.5rem;
+  .steps-list li:hover {
+    background: var(--bg-tertiary);
+    transform: translateX(4px);
+    box-shadow: var(--shadow-md);
   }
 
-  li {
-    margin-bottom: 0.5rem;
+  .steps-list li::before {
+    content: counter(step-counter);
+    position: absolute;
+    left: 1.5rem;
+    top: 1.25rem;
+    width: 36px;
+    height: 36px;
+    background: linear-gradient(135deg, var(--primary), var(--primary-light));
+    color: white;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1rem;
+    box-shadow: 0 4px 8px rgba(0, 102, 204, 0.2);
+  }
+
+  .steps-list strong {
+    color: var(--primary);
+    font-weight: 600;
+  }
+
+  .info-box {
+    background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+    border: 2px solid #bfdbfe;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin: 2rem 0;
+    display: flex;
+    gap: 1rem;
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% {
+      box-shadow: 0 0 0 0 rgba(0, 102, 204, 0.4);
+    }
+    50% {
+      box-shadow: 0 0 0 8px rgba(0, 102, 204, 0);
+    }
+  }
+
+  .info-box::before {
+    content: 'ℹ';
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    background: var(--primary);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1.25rem;
+  }
+
+  .info-box p {
+    margin: 0;
+    color: #1e40af;
+    line-height: 1.6;
   }
 
   .rtl {
@@ -68,92 +333,226 @@
     text-align: right;
   }
 
-  .info-box {
-    background: #f7fafd;
-    border-left: 4px solid var(--primary-color);
-    padding: 1rem;
-    margin-top: 1rem;
-    border-radius: 6px;
+  .rtl .steps-list li {
+    padding: 1.25rem 4.5rem 1.25rem 1.5rem;
+    border-left: none;
+    border-right: 4px solid var(--primary);
   }
 
-  @media (max-width: 600px) {
-    .container {
-      padding: 1rem;
+  .rtl .steps-list li::before {
+    left: auto;
+    right: 1.5rem;
+  }
+
+  .rtl h2::before {
+    order: 1;
+  }
+
+  .conclusion {
+    background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+    border: 2px solid #86efac;
+    border-radius: 12px;
+    padding: 2rem;
+    margin-top: 2rem;
+    text-align: center;
+  }
+
+  .conclusion h3 {
+    color: #15803d;
+    justify-content: center;
+    margin-top: 0;
+  }
+
+  .conclusion p {
+    color: #166534;
+    font-size: 1.05rem;
+    margin-top: 0.5rem;
+  }
+
+  @media (max-width: 768px) {
+    body {
+      padding: 1rem 0.5rem;
+    }
+
+    .header {
+      padding: 2rem 1.5rem;
+    }
+
+    h1 {
+      font-size: 1.75rem;
+    }
+
+    .subtitle {
+      font-size: 1rem;
+    }
+
+    .content-section {
+      padding: 1.5rem;
+    }
+
+    .lang-toggle {
+      flex-direction: column;
+    }
+
+    .lang-btn {
+      width: 100%;
+    }
+
+    .steps-list li {
+      padding: 1rem 1rem 1rem 3.5rem;
+    }
+
+    .steps-list li::before {
+      width: 32px;
+      height: 32px;
+      left: 1rem;
+      top: 1rem;
+    }
+
+    .rtl .steps-list li {
+      padding: 1rem 3.5rem 1rem 1rem;
+    }
+
+    .rtl .steps-list li::before {
+      right: 1rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * {
+      animation: none !important;
+      transition: none !important;
     }
   }
 </style>
 </head>
 <body>
   <div class="container">
-    <h1>Oracle E‑Business Suite – Training Page</h1>
+    <div class="header">
+      <div class="logo-container">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2L2 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-10-5zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V7.89l7-3.11v8.2z"/>
+        </svg>
+      </div>
+      <h1>Oracle E-Business Suite</h1>
+      <p class="subtitle">Training Portal & Quick Start Guide</p>
+      <div class="lang-toggle">
+        <button class="lang-btn active" onclick="showLanguage('en')">English</button>
+        <button class="lang-btn" onclick="showLanguage('ar')">العربية</button>
+      </div>
+    </div>
 
     <!-- English Section -->
-    <h2>English Instructions</h2>
-    <video controls>
-      <!-- Replace 'english_video.mp4' with the actual path to your English training video -->
-      <source src="english_video.mp4" type="video/mp4">
-      Your browser does not support the video tag.
-    </video>
-
-    <h3>Login Steps</h3>
-    <ol>
-      <li><strong>Open Firefox:</strong> Click the Firefox icon on your computer. The browser will open directly to the Oracle login page.</li>
-      <li><strong>Select language (optional):</strong> At the bottom of the login box, go to the <em>Language</em> field, click the small arrow, and choose Arabic or another preferred language.</li>
-      <li><strong>Enter your credentials:</strong> In the <em>User Name</em> field, type your username; in the <em>Password</em> field, type your password carefully.</li>
-      <li><strong>Log in:</strong> Click the <em>Login</em> button. If the information is correct, you will see the main Oracle page.</li>
-    </ol>
-
-    <h3>Navigating the System</h3>
-    <p>On the right side of the main page, you will find a list of available applications. Click an item—for example, <em>Purchase Order Details</em>—to open it. You can also use the search box at the top to quickly locate any screen.</p>
-    <p>When you select an application, the system will launch the familiar Java window. If a security prompt appears, accept it to proceed.</p>
-    <div class="info-box">
-      <p><strong>Important:</strong> The core system remains unchanged—the same screens, tools and permissions. The updates affect only the interface and underlying databases; your workflows continue as before.</p>
-    </div>
-
-    <h3>Adding to Favorites</h3>
-    <ol>
-      <li>From the main page, click the <em>Add to Favorites</em> icon.</li>
-      <li>Select the relevant responsibility from the <em>Responsibility</em> drop‑down menu and click <em>Go</em>.</li>
-      <li>In the list of available functions, choose the function you want and click <em>Add to Favorites</em>.</li>
-      <li>Scroll down to the <em>Favorites</em> section to confirm it has been added. You can reorder favorites or choose to open them in a new window.</li>
-      <li>Click <em>Apply</em> to save your changes. Back on the main page, the new favorite will appear as an icon for quick access.</li>
-    </ol>
-
-    <!-- Arabic Section -->
-    <h2>الإرشادات العربية</h2>
-    <video controls>
-      <!-- Replace 'arabic_video.mp4' with the actual path to your Arabic training video -->
-      <source src="arabic_video.mp4" type="video/mp4">
-      متصفحك لا يدعم عرض الفيديو.
-    </video>
-    <div class="rtl">
-      <h3>خطوات تسجيل الدخول</h3>
-      <ol>
-        <li><strong>فتح متصفح فايرفوكس:</strong> اضغط على أيقونة فايرفوكس في الجهاز. سيفتح المتصفح مباشرة صفحة تسجيل الدخول لنظام أوراكل.</li>
-        <li><strong>اختيار اللغة (اختياري):</strong> في أسفل مربع تسجيل الدخول نذهب إلى خانة اللغة، ثم نختار اللغة العربية أو أي لغة مفضلة.</li>
-        <li><strong>إدخال اسم المستخدم وكلمة السر:</strong> نكتب اسم المستخدم في خانة اسم المستخدم، ثم كلمة السر في خانة كلمة السر بدقة.</li>
-        <li><strong>الدخول:</strong> نضغط على زر <em>تسجيل الدخول</em>، فإذا كانت البيانات صحيحة تظهر الصفحة الرئيسية للنظام.</li>
-      </ol>
-
-      <h3>التنقل في النظام</h3>
-      <p>في الجهة اليمنى من الصفحة الرئيسية تظهر قائمة التطبيقات. ننقر مثلاً على خيار <em>تفاصيل أوامر الشراء</em> لفتحه. كما يمكن استخدام خانة البحث في الأعلى للوصول السريع لأي شاشة.</p>
-      <p>عند اختيار أي تطبيق، يفتح النظام نافذة جافا المعروفة. قد تظهر رسالة أمنية؛ في هذه الحالة نوافق عليها للاستمرار.</p>
-      <div class="info-box rtl">
-        <p><strong>تنبيه:</strong> يظل النظام كما هو: نفس الشاشات والأدوات والصلاحيات. التغيير فقط في واجهة الاستخدام وتحديث قواعد البيانات.</p>
+    <div id="en-section" class="content-section active">
+      <h2>Getting Started</h2>
+      
+      <div class="video-container">
+        <video controls>
+          <source src="english_video.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
       </div>
 
-      <h3>إضافة للمفضلة</h3>
-      <ol>
-        <li>من الصفحة الرئيسية نضغط على أيقونة <em>إضافة مفضلة</em>.</li>
-        <li>نختار <em>المسؤولية</em> المناسبة من القائمة المنسدلة ونضغط <em>اذهب</em>.</li>
-        <li>نحدد الوظيفة المراد إضافتها ونضغط <em>إضافة إلى المفضلة</em>.</li>
-        <li>ننزل إلى قسم <em>المفضلة</em> للتأكد من إضافتها، ويمكن ترتيبها للأعلى أو الأسفل عند الحاجة.</li>
-        <li>نضغط <em>تطبيق</em> لحفظ التغييرات، وستظهر الوظيفة في الصفحة الرئيسية كأيقونة مفضلة.</li>
+      <h3><span class="step-number">1</span> Login Steps</h3>
+      <ol class="steps-list">
+        <li><strong>Open Firefox:</strong> Click the Firefox icon on your computer. The browser will open directly to the Oracle login page.</li>
+        <li><strong>Select Language (Optional):</strong> At the bottom of the login box, navigate to the Language field, click the dropdown arrow, and choose Arabic or your preferred language.</li>
+        <li><strong>Enter Credentials:</strong> Type your username in the User Name field and carefully enter your password in the Password field.</li>
+        <li><strong>Sign In:</strong> Click the Login button. If your credentials are correct, you'll be directed to the main Oracle dashboard.</li>
       </ol>
+
+      <h3><span class="step-number">2</span> Navigating the System</h3>
+      <p>On the right side of the main page, you'll find a comprehensive list of available applications. Click any item—such as <em>Purchase Order Details</em>—to launch it. You can also use the search box at the top of the page to quickly locate any screen or function.</p>
+      <p>When you select an application, the system will open the familiar Java-based interface. If a security prompt appears, simply accept it to continue working.</p>
+      
+      <div class="info-box">
+        <p><strong>Important Notice:</strong> The core system functionality remains completely unchanged—you'll find the same screens, tools, and permissions you're familiar with. The recent updates only enhance the user interface and modernize the underlying databases. Your established workflows will continue exactly as before.</p>
+      </div>
+
+      <h3><span class="step-number">3</span> Adding to Favorites</h3>
+      <ol class="steps-list">
+        <li><strong>Access Favorites:</strong> From the main page, click the Add to Favorites icon in the navigation menu.</li>
+        <li><strong>Select Responsibility:</strong> Choose the appropriate responsibility from the Responsibility dropdown menu and click Go to view available functions.</li>
+        <li><strong>Add Function:</strong> Browse the list of available functions, select the one you want to bookmark, and click Add to Favorites.</li>
+        <li><strong>Organize:</strong> Scroll down to the Favorites section to confirm it has been added. You can reorder favorites by dragging them up or down, or configure them to open in a new window.</li>
+        <li><strong>Save Changes:</strong> Click Apply to save your preferences. Return to the main page where your new favorite will appear as a quick-access icon.</li>
+      </ol>
+
+      <div class="conclusion">
+        <h3>✓ Ready to Go!</h3>
+        <p>You're all set to use the enhanced Oracle E-Business Suite. The system's powerful functionality remains intact while delivering a more modern and intuitive experience.</p>
+      </div>
     </div>
 
-    <h3>Conclusion</h3>
-    <p>The system’s functionality remains unchanged; only the interface and databases have been improved. We hope this guide helps you use the new interface with confidence.</p>
+    <!-- Arabic Section -->
+    <div id="ar-section" class="content-section">
+      <div class="rtl">
+        <h2>البدء السريع</h2>
+        
+        <div class="video-container">
+          <video controls>
+            <source src="arabic_video.mp4" type="video/mp4">
+            متصفحك لا يدعم عرض الفيديو.
+          </video>
+        </div>
+
+        <h3><span class="step-number">١</span> خطوات تسجيل الدخول</h3>
+        <ol class="steps-list">
+          <li><strong>فتح متصفح فايرفوكس:</strong> انقر على أيقونة فايرفوكس في جهازك. سيفتح المتصفح تلقائياً صفحة تسجيل الدخول إلى نظام أوراكل.</li>
+          <li><strong>اختيار اللغة (اختياري):</strong> في أسفل مربع تسجيل الدخول، انتقل إلى حقل اللغة، انقر على السهم المنسدل، واختر اللغة العربية أو أي لغة تفضلها.</li>
+          <li><strong>إدخال بيانات الاعتماد:</strong> اكتب اسم المستخدم في حقل اسم المستخدم، ثم أدخل كلمة المرور بعناية في حقل كلمة المرور.</li>
+          <li><strong>تسجيل الدخول:</strong> انقر على زر تسجيل الدخول. إذا كانت بياناتك صحيحة، ستظهر لك الصفحة الرئيسية لنظام أوراكل.</li>
+        </ol>
+
+        <h3><span class="step-number">٢</span> التنقل في النظام</h3>
+        <p>على الجانب الأيمن من الصفحة الرئيسية، ستجد قائمة شاملة بالتطبيقات المتاحة. انقر على أي عنصر—مثل <em>تفاصيل أوامر الشراء</em>—لفتحه. يمكنك أيضاً استخدام مربع البحث في أعلى الصفحة للوصول السريع إلى أي شاشة أو وظيفة.</p>
+        <p>عند اختيار أي تطبيق، سيفتح النظام واجهة جافا المألوفة. إذا ظهرت رسالة أمنية، ما عليك سوى الموافقة عليها للمتابعة.</p>
+        
+        <div class="info-box">
+          <p><strong>تنبيه مهم:</strong> يظل النظام الأساسي دون تغيير تماماً—ستجد نفس الشاشات والأدوات والصلاحيات التي اعتدت عليها. التحديثات الأخيرة تعمل فقط على تحسين واجهة المستخدم وتحديث قواعد البيانات. ستستمر سير عملك المعتاد بالضبط كما كان.</p>
+        </div>
+
+        <h3><span class="step-number">٣</span> إضافة إلى المفضلة</h3>
+        <ol class="steps-list">
+          <li><strong>الوصول للمفضلة:</strong> من الصفحة الرئيسية، انقر على أيقونة إضافة إلى المفضلة في قائمة التنقل.</li>
+          <li><strong>اختيار المسؤولية:</strong> اختر المسؤولية المناسبة من القائمة المنسدلة وانقر على اذهب لعرض الوظائف المتاحة.</li>
+          <li><strong>إضافة الوظيفة:</strong> تصفح قائمة الوظائف المتاحة، حدد الوظيفة التي تريد حفظها، وانقر على إضافة إلى المفضلة.</li>
+          <li><strong>التنظيم:</strong> انتقل إلى قسم المفضلة للتأكد من إضافتها. يمكنك إعادة ترتيب المفضلات عن طريق سحبها لأعلى أو لأسفل، أو تكوينها لفتحها في نافذة جديدة.</li>
+          <li><strong>حفظ التغييرات:</strong> انقر على تطبيق لحفظ إعداداتك. ارجع إلى الصفحة الرئيسية حيث ستظهر المفضلة الجديدة كأيقونة للوصول السريع.</li>
+        </ol>
+
+        <div class="conclusion">
+          <h3>✓ جاهز للبدء!</h3>
+          <p>أنت الآن جاهز لاستخدام نظام أوراكل المحدث. تظل وظائف النظام القوية كما هي مع توفير تجربة أكثر حداثة وسهولة في الاستخدام.</p>
+        </div>
+      </div>
+    </div>
   </div>
+
+  <script>
+    function showLanguage(lang) {
+      // Hide all sections
+      document.querySelectorAll('.content-section').forEach(section => {
+        section.classList.remove('active');
+      });
+      
+      // Remove active class from all buttons
+      document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.classList.remove('active');
+      });
+      
+      // Show selected section
+      document.getElementById(lang + '-section').classList.add('active');
+      
+      // Activate clicked button
+      event.target.classList.add('active');
+      
+      // Smooth scroll to content
+      document.querySelector('.content-section.active').scrollIntoView({ 
+        behavior: 'smooth', 
+        block: 'start' 
+      });
+    }
+  </script>
 </body>
 </html>
